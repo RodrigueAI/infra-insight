@@ -1,0 +1,19 @@
+name: infra-insight
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pytorch
+  - torchvision
+ # - cputoolkit  oder mps/cuda je nach target
+  - pandas
+  - numpy
+  - matplotlib
+  - seaborn
+  - scikit-learn
+  - jupyterlab
+  - pip
+  - pip:
+    - torchmetrics
