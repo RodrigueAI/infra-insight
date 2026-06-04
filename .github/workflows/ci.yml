@@ -17,10 +17,10 @@ jobs:
 
     # 2. Python 3.10 exakt wie lokal aufsetzen
     - name: Set up Python 3.10
-      uses: actions/uses/setup-python@v5
+      uses: actions/setup-python@v5
       with:
         python-version: "3.10"
-        cache: 'pip' # Beschleunigt zukünftige Pipeline-Runs
+        cache: 'pip'
 
     # 3. Nur die schlanken Code-Qualitäts-Tools installieren (kein schweres PyTorch nötig für Linting!)
     - name: Install Linting Tools
