@@ -1,10 +1,11 @@
 import pickle
 from pathlib import Path
+
 import numpy as np
 import pandas as pd
 import torch
 from sklearn.preprocessing import StandardScaler
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import DataLoader, Dataset
 
 from src.config import Config
 from src.utils.logger import setup_logger
@@ -70,7 +71,10 @@ def process_and_split_data(config: Config):
     X_test_raw, y_test = X_raw[val_end:], y_raw[val_end:]
 
     logger.info(
-        f"Split-Verhältnis: Train={len(X_train_raw)} | Val={len(X_val_raw)} | Test={len(X_test_raw)}"
+
+        "Split-Verhältnis: "
+        f"Train={len(X_train_raw)} | Val={len(X_val_raw)} | Test={len(X_test_raw)}"
+
     )
 
     # 4. Skalierung (Fit AUSSCHLIESSLICH auf Train)

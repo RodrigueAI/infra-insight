@@ -39,11 +39,12 @@ line_length = 100
 multi_line_output = 3
 
 [tool.ruff]
-# Modernes Linting-Tool, das Flake8, isort und Black-Checks kombiniert
 line-length = 100
 target-version = "py310"
-select = ["E", "F", "W", "I"] # Error, Pyflakes, Warnings, Isort
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
 ignore = []
 
-[tool.ruff.per-file-ignores]
-"notebooks/*" = ["E402", "F401"] # Ignoriere Pfad-Imports und ungenutzte Imports in Notebooks
+[tool.ruff.lint.per-file-ignores]
+"notebooks/*" = ["E402", "F401"]
