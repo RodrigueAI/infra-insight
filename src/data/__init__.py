@@ -1,1 +1,5 @@
-from src.data.data_loader import load_prepared_datasets, process_and_split_data
+from src.data.data_loader import (
+    get_data_loaders,
+    load_prepared_datasets,
+    process_and_split_data,
+)
