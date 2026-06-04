@@ -1,10 +1,11 @@
 import pickle
 from pathlib import Path
+
 import numpy as np
 import pandas as pd
 import torch
 from sklearn.preprocessing import StandardScaler
-from torch.utils.data import Dataset
+from torch.utils.data import DataLoader, Dataset
 
 from src.config import Config
 from src.utils.logger import setup_logger
@@ -70,7 +71,8 @@ def process_and_split_data(config: Config):
     X_test_raw, y_test = X_raw[val_end:], y_raw[val_end:]
 
     logger.info(
-        f"Split-Verhältnis: Train={len(X_train_raw)} | Val={len(X_val_raw)} | Test={len(X_test_raw)}"
+        "Split-Verhältnis: "
+        f"Train={len(X_train_raw)} | Val={len(X_val_raw)} | Test={len(X_test_raw)}"
     )
 
     # 4. Skalierung (Fit AUSSCHLIESSLICH auf Train)
@@ -96,6 +98,7 @@ def process_and_split_data(config: Config):
 
     # Lokaler Import, um globalen Scope sauber zu halten
     import os
+
     logger.info(f"✅ Alle Daten erfolgreich in '{os.path.relpath(processed_dir)}' persistiert.")
 
 
@@ -119,3 +122,29 @@ def load_prepared_datasets(config: Config):
     test_dataset = TimeSeriesDataset(test_data["X"], test_data["y"], seq_len)
 
     return train_dataset, val_dataset, test_dataset
+
+
+def get_data_loaders(config: Config):
+    """Erzeugt fertige, direkt einsatzbereite DataLoader für das Modelltraining
+
+    gemäß den Parametern aus der config.yaml.
+    """
+    logger.info("Generiere PyTorch DataLoader für Train, Val und Test...")
+
+    # 1. Fertig präparierte Datasets laden
+    train_dataset, val_dataset, test_dataset = load_prepared_datasets(config)
+
+    # 2. DataLoader instanziieren
+    batch_size = config.training["batch_size"]
+
+    # CRITICAL: shuffle=False bei ALLEN Loadern, da es sich um eine fortlaufende Zeitreihe handelt!
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=False)
+    val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
+    test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
+
+    logger.info(
+        f"✅ DataLoader erfolgreich erstellt. Batches pro Epoche: "
+        f"Train={len(train_loader)} | Val={len(val_loader)} | Test={len(test_loader)}"
+    )
+
+    return train_loader, val_loader, test_loader
