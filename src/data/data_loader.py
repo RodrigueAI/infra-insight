@@ -71,10 +71,8 @@ def process_and_split_data(config: Config):
     X_test_raw, y_test = X_raw[val_end:], y_raw[val_end:]
 
     logger.info(
-
         "Split-Verhältnis: "
         f"Train={len(X_train_raw)} | Val={len(X_val_raw)} | Test={len(X_test_raw)}"
-
     )
 
     # 4. Skalierung (Fit AUSSCHLIESSLICH auf Train)
