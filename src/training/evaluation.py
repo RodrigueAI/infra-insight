@@ -1,12 +1,12 @@
+import matplotlib.pyplot as plt
 import numpy as np
 import torch
-import matplotlib.pyplot as plt
 from pathlib import Path
 
 from src.config import Config
-from src.utils.logger import setup_logger
 from src.data import get_data_loaders
 from src.training.models import CPUForecastGRU
+from src.utils.logger import setup_logger
 
 logger = setup_logger(__name__)
 
