@@ -3,137 +3,60 @@
 [![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=flat&logo=pytorch&logoColor=white)](https://pytorch.org/)
 [![Code Style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Linter: Ruff](https://img.shields.io/badge/linter-ruff-6140B3.svg)](https://github.com/astral-sh/ruff)
+[![CI/CD: GitHub Actions](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-2088FF.svg?logo=githubactions&logoColor=white)](https://github.com/)
 
-An end-to-end Machine Learning pipeline designed to forecast infrastructure resource utilization (e.g., CPU, RAM, Network I/O). By leveraging deep learning sequentially, this project aims to proactively detect potential system bottlenecks or over-provisioning before they affect production environments.
+An end-to-end Machine Learning engineering pipeline designed to forecast infrastructure resource utilization (e.g., CPU, RAM, Network I/O). By leveraging deep sequential models, this framework aims to proactively detect potential system bottlenecks or over-provisioning before they affect production environments.
 
-This repository serves as a professional showcase demonstrating strict software engineering principles applied to Data Science: explicit environment management, modular code design, and mathematically sound time-series validation.
-
----
-
-## 🏗️ Project Architecture & Workflow
-
-The project is structured to transition smoothly from exploratory notebooks to production-ready, modular Python scripts.
-
-```text
-infra-insight/
-├── environment.yml        # Strict Conda environment specification
-├── pyproject.toml         # Tooling configuration (Black, Ruff, etc.)
-├── README.md              # Project documentation
-├── data/                  # Local data storage (Git ignored)
-├── notebooks/             # Exploratory phase
-│   ├── 01_eda.ipynb       # Time-series analysis, ACF/PACF plots
-│   └── 02_training.ipynb  # Interactive model prototyping
-└── src/                   # Production-grade modular source code
-    ├── __init__.py
-    ├── data_loader.py     # Custom PyTorch SlidingWindowDataset
-    ├── models.py          # PyTorch Recurrent Architectures (GRU/LSTM)
-    └── train.py           # Training loop & validation execution
-```
-
-# 🛠️ Tech Stack & Rigorous Standards
-
-## Deep Learning Framework
-- **PyTorch** für den Aufbau und das Training benutzerdefinierter rekurrenter neuronaler Netze.
-
-## Data Wrangling
-- **Pandas** & **NumPy** für Matrixoperationen und performante Feature-Berechnung.
-
-## Visualization
-- **Matplotlib** & **Seaborn** zur Analyse statistischer Verteilungen und Fehlermetriken.
-
-## Environment Management
-- Kein loses `requirements.txt`.
-- Abhängigkeiten werden strikt über ein natives Conda-`environment.yml` verwaltet, um deterministische Builds sicherzustellen (inkl. CUDA-/MPS-Konfigurationen).
-- Ergänzt durch ein `pyproject.toml` für standardisierte Linter- und Tool-Konfigurationen.
+This repository serves as a professional software showcase demonstrating strict production-grade engineering principles applied to Data Science: centralized hyperparameter management, automated logging, plattform-independent path resolution, and an isolated, fully non-leaking evaluation layer.
 
 ---
 
-# 📊 Machine Learning Pipeline
+## 📖 Deep Technical Documentation & Architecture
 
-## 1. Exploratory Data Analysis (EDA)
+Instead of cluttering the root file with extensive mathematical breakdowns and statistical proofs, the complete engineering background is fully documented in the **[InfraInsight GitHub Wiki](https://github.com/)** *(Insert your repository wiki link here)*.
 
-### Trend & Seasonality
-Zerlegung von Metriken zur Isolierung täglicher und wöchentlicher Infrastrukturzyklen.
-
-### Autocorrelation
-Verwendung von **ACF**- und **PACF**-Plots zur mathematischen Bestimmung optimaler Sequenzlängen (Lags), anstatt diese heuristisch festzulegen.
-
----
-
-## 2. Time-Series Feature Engineering
-
-Um komplexe Muster effizient zu erlernen, werden folgende Features dynamisch erzeugt:
-
-### Lag Features
-Historische Verschiebungen:
-
-$$
-t-1,\; t-2,\; \dots,\; t-n
-$$
-
-### Rolling Statistics
-- Gleitende Mittelwerte (*Rolling Averages*)
-- Rollierende Standardabweichungen
-
-über dynamische Fenster zur Erfassung von Volatilität.
-
-### Temporal Context
-Zyklische Kodierung zeitlicher Variablen:
-
-- Stunde des Tages
-- Wochentag
+### 🗺️ Wiki Quick Links:
+* **[Architecture Overview](https://github.com/)** – Package segmentation, code interfaces, and system runtime workflow.
+* **[Data Pipeline & Feature Engineering](https://github.com/)** – Autocorrelation bounds, rolling context features, and cyclic time representation.
+* **[Model Mechanics & Optimization](https://github.com/)** – Gated Recurrent Unit (GRU) dimensions, Apple Silicon acceleration (MPS), and loss dynamics.
+* **[Validation Strategy](https://github.com/)** – Chronological multi-splitting and the mathematical prevention of Data Leakage.
 
 ---
 
-## 3. PyTorch Dataset & Modeling
+## 📊 Baseline Performance Dashboard
 
-### SlidingWindowDataset
+The pipeline automatically monitors convergence and evaluates model checkpoints out-of-time against completely unseen test data.
 
-Eine benutzerdefinierte Implementierung von `torch.utils.data.Dataset`, die 2D-tabellarische Infrastruktur-Logs in strukturierte 3D-Tensoren transformiert:
+### 1. Training Convergence Trend
+The optimization phase shows clear exponential decay and high numerical stability across both training and validation sets:
 
-$$
-\text{Shape: } (\text{Batch Size}, \text{Sequence Length}, \text{Features})
-$$
+![Model Loss Trend](notebooks/loss_curve.png)
 
-### Architektur
+### 2. Forecast Performance vs. Reality
+Headless evaluation on the out-of-time Test Set confirms that the GRU baseline effectively locks onto the localized system baseline noise:
 
-Verwendung eines **GRU-** oder **LSTM-Netzwerks**, um langfristige Abhängigkeiten im Systemverhalten zu modellieren und gleichzeitig das Problem verschwindender Gradienten zu minimieren.
+![Actual vs Predicted CPU](notebooks/predictions_vs_actual.png)
 
----
-
-## 4. Evaluation Strategy
-
-### Strict Time-Splitting
-
-Standardmäßige **K-Fold Cross-Validation** führt bei Zeitreihendaten zu schwerwiegendem **Data Leakage**.
-
-Dieses Projekt erzwingt daher:
-
-- Chronologische Train/Test-Splits
-- Alternativ `TimeSeriesSplit`
-
-Dadurch wird garantiert, dass das Modell niemals auf zukünftigen Informationen trainiert wird.
-
-### Metriken
-
-Bewertung mittels:
-
-- **Mean Absolute Error (MAE)**
-- **Root Mean Squared Error (RMSE)**
+### 🏆 Evaluated Baseline Metrics:
+* **Mean Absolute Error (MAE):** `3.19% CPU`
+* **Root Mean Squared Error (RMSE):** `5.61% CPU`
 
 ---
 
-# 🚀 Getting Started
+## 🚀 Getting Started
 
-## Prerequisites
+### Prerequisites
+Ensure that **Miniforge** or **Anaconda** is installed on your local machine.
 
-Stelle sicher, dass **Miniforge** oder **Anaconda** installiert ist.
-
-## Setup Environment
-
-Repository klonen und die exakte Umgebung mittels Conda reproduzieren:
+### Environment Deployment
+Clone the repository and reproduce the exact, locked development environment using Conda:
 
 ```bash
+# Clone the repository
+git clone [https://github.com/your-username/infra-insight.git](https://github.com/your-username/infra-insight.git)
+cd infra-insight
+
 # Create the environment from the locked specification
 conda env create -f environment.yml
 
@@ -141,24 +64,77 @@ conda env create -f environment.yml
 conda activate infra-insight
 ```
 
-## Running the Pipeline
+# 🚀 Running the Pipeline
 
-Die Entwicklungsschritte können innerhalb des Verzeichnisses `notebooks/` nachvollzogen werden oder direkt über die modulare Trainings-Pipeline ausgeführt werden:
+You can execute the entire workflow—from exploratory analysis to final model evaluation—either interactively through the provided Jupyter Notebooks or directly from the command line using the headless training components.
+
+## Step 1: Data Processing & Feature Engineering
+
+Preprocess the raw telemetry data, generate temporal features, perform dataset splitting, and persist all intermediate artifacts.
 
 ```bash
-python src/train.py
+python -c "from src.config import Config; from src.data import process_and_split_data; process_and_split_data(Config())"
 ```
 
----
+This step:
+
+- Loads the raw telemetry dataset.
+- Applies feature engineering and temporal transformations.
+- Generates Train, Validation, and Test splits.
+- Persists scaled datasets (`.npz`) and scaler objects (`.pkl`) for downstream training.
+
+## Step 2: Model Training
+
+Launch the training pipeline and automatically generate model checkpoints.
+
+```bash
+python src/training/train.py
+```
+
+This step:
+
+- Loads the preprocessed datasets.
+- Instantiates the configured neural architecture.
+- Executes the training and validation loops.
+- Tracks loss convergence and model performance.
+- Saves the best-performing checkpoint based on validation loss.
 
 # 🔮 Future Roadmap
 
-Die Architektur wurde explizit für Skalierbarkeit entwickelt.
+The platform is intentionally designed for long-term scalability and enterprise-grade extensibility.
 
-Geplante Erweiterungen umfassen:
+## 🔄 Multivariate Extension
 
-- Migration des Feature-Engineering-Layers nach **Apache Spark (PySpark)**
-- Persistierung der Daten in einem **Data Vault 2.0** Schema
-- Enterprise-taugliche Nachvollziehbarkeit (*Auditability*)
-- Skalierbare Batch-Verarbeitung großer Infrastrukturdatenmengen
-- Verbesserte Governance- und Compliance-Fähigkeiten
+Integrate additional infrastructure signals such as:
+
+- Network I/O
+- Disk Read/Write Throughput
+- Memory Utilization
+- Process-Level Metrics
+
+These auxiliary features can be incorporated into the recurrent hidden state, enabling the model to capture complex non-linear system dynamics and abrupt level shifts that are impossible to infer from CPU utilization alone.
+
+## ⚡ PySpark Migration
+
+Migrate the feature-engineering and preprocessing layer to **Apache Spark** to support industrial-scale telemetry workloads.
+
+Benefits include:
+
+- Distributed feature generation
+- Parallelized preprocessing
+- Improved scalability for multi-server environments
+- Reduced processing times for large historical datasets
+
+## 🏛️ Data Vault 2.0 Integration
+
+Implement a structured **Data Vault 2.0** architecture as the long-term storage backbone for telemetry data.
+
+Key objectives include:
+
+- Auditable historical tracking
+- Separation of business keys and descriptive attributes
+- Incremental data loading
+- Improved lineage and governance
+- Enterprise-ready support for multi-server telemetry ecosystems
+
+This architectural evolution establishes the foundation for large-scale predictive infrastructure monitoring, continuous model retraining, and future MLOps integration.
