@@ -1,7 +1,8 @@
+from pathlib import Path
+
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
-from pathlib import Path
 
 from src.config import Config
 from src.data import get_data_loaders

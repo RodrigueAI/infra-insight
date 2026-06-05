@@ -1,7 +1,8 @@
+from pathlib import Path
+
 import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
-from pathlib import Path
 
 from src.config import Config
 from src.data import get_data_loaders
@@ -91,7 +92,9 @@ class Trainer:
             self.val_losses.append(val_loss)
 
             logger.info(
-                f"Epoch [{epoch:02d}/{epochs:02d}] -> Train Loss: {train_loss:.4f} | Val Loss: {val_loss:.4f}"
+                f"Epoch [{epoch:02d}/{epochs:02d}] -> "
+                f"Train Loss: {train_loss:.4f} | "
+                f"Val Loss: {val_loss:.4f}"
             )
 
             # Checkpoint speichern, wenn sich das Modell auf den Validierungsdaten verbessert
