@@ -138,7 +138,7 @@ def get_data_loaders(config: Config):
     batch_size = config.training["batch_size"]
 
     # CRITICAL: shuffle=False bei ALLEN Loadern, da es sich um eine fortlaufende Zeitreihe handelt!
-    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=False)
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=False, drop_last=True)
     val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
