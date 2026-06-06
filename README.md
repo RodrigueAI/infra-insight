@@ -14,7 +14,7 @@ This repository serves as a professional software showcase demonstrating strict 
 
 ## 📖 Deep Technical Documentation & Architecture
 
-Instead of cluttering the root file with extensive mathematical breakdowns and statistical proofs, the complete engineering background is fully documented in the **[InfraInsight GitHub Wiki](https://github.com/)** *(Insert your repository wiki link here)*.
+Instead of cluttering the root file with extensive mathematical breakdowns and statistical proofs, the complete engineering background is fully documented in the **[InfraInsight GitHub Wiki](https://github.com/RodrigueAI/infra-insight/wiki)** 
 
 ### 🗺️ Wiki Quick Links:
 * **[Architecture Overview](https://github.com/)** – Package segmentation, code interfaces, and system runtime workflow.
