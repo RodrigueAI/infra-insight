@@ -1,5 +1,7 @@
+# src/database/schemas.py
 from datetime import datetime
 from hashlib import sha256
+
 from pydantic import BaseModel, Field
 
 
