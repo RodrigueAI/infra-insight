@@ -3,9 +3,7 @@
 from pathlib import Path
 
 import pyspark.sql.functions as F
-
 from pyspark.sql import SparkSession
-
 from pyspark.sql.types import (
     DoubleType,
     StructField,
@@ -14,7 +12,6 @@ from pyspark.sql.types import (
 )
 
 from src.config import Config
-
 from src.utils.logger import setup_logger
 
 logger = setup_logger(__name__)
