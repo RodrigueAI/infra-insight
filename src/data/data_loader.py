@@ -3,8 +3,8 @@ from pathlib import Path
 
 import numpy as np
 import pyarrow.parquet as pq
-from sklearn.preprocessing import StandardScaler
 import torch
+from sklearn.preprocessing import StandardScaler
 from torch.utils.data import DataLoader, Dataset
 
 from src.config import Config

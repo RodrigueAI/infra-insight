@@ -1,11 +1,16 @@
 # src/data/spark_pipeline.py
 from pathlib import Path
 
+import pyspark.sql.functions as F
 from pyspark.ml.feature import VectorAssembler
 from pyspark.ml.functions import vector_to_array
 from pyspark.sql import SparkSession
-import pyspark.sql.functions as F
-from pyspark.sql.types import DoubleType, StructField, StructType, TimestampType
+from pyspark.sql.types import (
+    DoubleType,
+    StructField,
+    StructType,
+    TimestampType,
+)
 from pyspark.sql.window import Window
 
 from src.config import Config
