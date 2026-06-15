@@ -1,7 +1,8 @@
+# src/data/spark_pipeline.py
 from pathlib import Path
 
 from pyspark.ml.feature import VectorAssembler
-from pyspark.ml.functions import vector_to_array  # NEU: Löst den IndexError auf PyTorch-Ebene
+from pyspark.ml.functions import vector_to_array
 from pyspark.sql import SparkSession
 import pyspark.sql.functions as F
 from pyspark.sql.types import DoubleType, StructField, StructType, TimestampType
@@ -156,7 +157,8 @@ def run_spark_feature_engineering(config: Config):
     df_test = df_assembled.filter(F.col("timestamp") > val_cut_ts)
 
     logger.info(
-        f"Exportiere verteilte Splits: Train={df_train.count()} | Val={df_val.count()} | Test={df_test.count()}"
+        f"Exportiere verteilte Splits: "
+        f"Train={df_train.count()} | Val={df_val.count()} | Test={df_test.count()}"
     )
 
     # 4. Export
