@@ -48,7 +48,7 @@ def process_and_split_data(config: Config):
     df_val = pq.read_table(spark_dir / "val.parquet").to_pandas().sort_values("timestamp")
     df_test = pq.read_table(spark_dir / "test.parquet").to_pandas().sort_values("timestamp")
 
-    # CRITICAL FIX: Da es sich nun um ein echtes Array handelt, 
+    # CRITICAL FIX: Da es sich nun um ein echtes Array handelt,
     # konvertieren wir es sauber in eine Matrix
     X_train_raw = np.array(df_train["feature_array"].tolist())
     X_val_raw = np.array(df_val["feature_array"].tolist())
